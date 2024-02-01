@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView
@@ -7,6 +7,8 @@ from django.urls import reverse_lazy
 from django.db.models import Sum
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import logout  
+from django.urls import reverse
 
 # Create your views here.
 @login_required 
@@ -33,16 +35,22 @@ class MenuCreateView(LoginRequiredMixin,CreateView):
     model = MenuItem
     fields = "__all__"
     template_name = "inventory/add_menu_item.html"
+    def get_success_url(self):
+        return reverse("menu-list")
 
 class IngredientCreateView(LoginRequiredMixin,CreateView):
     model = Ingredient
     fields = "__all__"
     template_name = "inventory/add_ingredient.html"   
+    def get_success_url(self):
+        return reverse("ingredient-list")
 
 class RecipeRequirementCreateView(LoginRequiredMixin,CreateView):
     model = RecipeRequirement
     fields = "__all__"
-    template_name = "inventory/add_reciperequirement.html"    
+    template_name = "inventory/add_reciperequirement.html" 
+    def get_success_url(self):
+        return reverse("index")
 
 class PurchaseListView(LoginRequiredMixin,ListView):
     model = Purchase
@@ -52,11 +60,15 @@ class PurchaseCreateView(LoginRequiredMixin,CreateView):
     model = Purchase
     fields= "__all__"
     template_name = "inventory/add_purchase.html"
+    def get_success_url(self):
+        return reverse("purchase-list")
 
 class IngredientUpdateView(LoginRequiredMixin,UpdateView):
     model = Ingredient
     fields=['quantity']
-    template_name = "inventory/update_ingredient.html"    
+    template_name = "inventory/update_ingredient.html"  
+    def get_success_url(self):
+        return reverse("ingredient-list")  
 
 @login_required
 def stats(request):
@@ -76,3 +88,8 @@ def stats(request):
     }
 
     return render(request, "inventory/stats.html", context )
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
+

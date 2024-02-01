@@ -3,7 +3,9 @@
 {% block head %}
 <link rel="stylesheet" href="{% static 'inventory/styles.css' %}" />
 {% endblock %} {% block content %}
+
 <h1>Ingredients</h1>
+<p><a href="{% url 'ingredient-add' %}">Add Ingredient</a></p>
 
 <table>
   <thead>

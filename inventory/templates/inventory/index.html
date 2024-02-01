@@ -19,6 +19,13 @@
   <li>
     <a href="{% url 'stats' %}">Stats</a>
   </li>
+  <li>
+    <a href="{% url 'reciperequirement-add' %}">Add Recipe Requirement</a>
+  </li>
+  <form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Log Out</button>
+  </form>
 </ul>
 
 {% endblock %}
