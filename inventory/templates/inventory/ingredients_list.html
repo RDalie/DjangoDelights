@@ -1,0 +1,36 @@
+{% extends 'inventory/base.html' %} 
+{% load static %} 
+{% block head %}
+<link rel="stylesheet" href="{% static 'inventory/styles.css' %}" />
+{% endblock %} {% block content %}
+<h1>Ingredients</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Price Per Unit</th>
+      <th></th>
+      <th></th>
+      
+      
+    </tr>
+  </thead>
+  <tbody>
+    {% for ingredient in object_list %}
+    <tr>
+      <td>{{ ingredient.name }}</td>
+      <td>{{ ingredient.quantity}} {{ ingredient.unit|lower }}</td>
+      <td>{{ ingredient.price_per_unit }}</td>
+      <td><a href="{% url 'ingredient-delete' ingredient.id %}">Delete</a></td>
+      <td><a href="{% url 'ingredient-update' ingredient.id %}">Update</a></td>
+      
+    </tr>
+    {% empty %}
+    <li>No ingredients yet.</li>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
