@@ -1,1 +1,1 @@
-"# DjangoDelights" 
+# DjangoDelights
